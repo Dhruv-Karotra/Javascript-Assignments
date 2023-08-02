@@ -80,7 +80,7 @@ class User{
 
     updateUser(ID, parameter, updatedValue){
         if(!this.isAdmin){
-            return "Only admin can create new user!";
+            return "Only admin can update new user!";
         }
         if(typeof ID!='number'){
             return "Invalid ID passed!"
@@ -235,10 +235,10 @@ class User{
         return this.contacts[indexOfContact].getContactInfoByID(contactID);
     }
 
-    updateContactInfo(contactID,parameter,newValue){
+    updateContactInfo(contactID,contactInfoID,parameter,newValue){
         let[indexOfContact,isContact]=this.findContact(contactID)
         if(!isContact){return "Contact not found. Contact does not exist";}
-        return this.contacts[indexOfContact].updateContactInfo(contactID,parameter,newValue)
+        return this.contacts[indexOfContact].updateContactInfo(contactInfoID,parameter,newValue)
     }
 
     deleteContactInfo(contactID){
@@ -271,12 +271,13 @@ user1.updateContact(0,"country","Australia");
 
 user1.createContactInfo(0,"Navi Mumbai","Ulwe");
 user1.createContactInfo(1,"Navi Mumbai","Kharkopar");
-console.log(user1);
+user1.updateContactInfo(0,0,"city","Banglore");
+//console.log(user1);
 console.log(user1.contacts[0].getContactInfo());
 
-console.log(admin.getUserByID(1));
-console.log(user1.getContactByID(1));
-console.log(user1.getContactInfoByID(1));
+// console.log(admin.getUserByID(1));
+// console.log(user1.getContactByID(1));
+// console.log(user1.getContactInfoByID(1));
 
 
 

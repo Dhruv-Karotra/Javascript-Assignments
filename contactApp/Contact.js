@@ -55,8 +55,8 @@ class Contact{
         return this.contactInfos[indexOfContactInfo];
     }
     
-    updateContactInfo(contactID,parameter,value){
-        let[indexOfContact,isContactInfo]=this.findContactInfo(contactID)
+    updateContactInfo(contactInfoID,parameter,value){
+        let[indexOfContact,isContactInfo]=this.findContactInfo(contactInfoID)
         if(!isContactInfo){return "Contact info not found. Contact info does not exist";}
         return this.contactInfos[indexOfContact].updateContactInfo(parameter,value)
     }
