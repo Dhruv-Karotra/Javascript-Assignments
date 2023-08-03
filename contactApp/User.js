@@ -199,6 +199,9 @@ class User{
         if(this.isAdmin){
             return "Only user can update contact!";
         }
+        if(typeof contactID!='number'){
+            return "Invalid ID passed!"
+        }
         if(typeof city!='string'){
             return "Invalid city info!";
         }
@@ -218,6 +221,9 @@ class User{
         if(this.isAdmin){
             return "Only user can get contact information";
         }
+        if(typeof contactID!='number'){
+            return "Invalid ID passed!"
+        }
         let[indexOfContact,isContact]=this.findContact(contactID);
         if(!isContact){return "Contact not found. Contact does not exist";}
         return this.contacts[indexOfContact].getContactInfo();
@@ -236,22 +242,19 @@ class User{
     }
 
     updateContactInfo(contactID,contactInfoID,parameter,newValue){
+        if(this.isAdmin){
+            return "Only user can update contact!";
+        }
+        if(typeof contactID!='number'){
+            return "Invalid contactID passed!";
+        }
+        if(typeof contactInfoID!='number'){
+            return "Invalid contactID passed!";
+        }
         let[indexOfContact,isContact]=this.findContact(contactID)
         if(!isContact){return "Contact not found. Contact does not exist";}
         return this.contacts[indexOfContact].updateContactInfo(contactInfoID,parameter,newValue)
     }
-
-    // deleteContactInfo(contactID){
-    //     if(this.isAdmin){
-    //         return "Only user can delete contact!"
-    //     }
-    //     if(typeof contactID!='number'){
-    //         return "Invalid contactID passed!"
-    //     }
-    //     let[indexOfContact, isContact]=this.findContact(contactID)
-    //     if(!isContact){return "Contact not found. Contact does not exist";}
-    //     return this.contacts[indexOfContact].deleteContactInfo(contactID)
-    // }
 
     deleteContactInfo(contactID,contactInfoID){
         if(this.isAdmin){
@@ -260,8 +263,11 @@ class User{
         if(typeof contactID!='number'){
             return "Invalid contactID passed!";
         }
+        if(typeof contactInfoID!='number'){
+            return "Invalid contactID passed!";
+        }
         let[indexOfContact, isContact]=this.findContact(contactID)
-        // if(isContact){return "Contact not found. Contact does not exist";}
+        if(!isContact){return "Contact not found. Contact does not exist";}
         return this.contacts[indexOfContact].deleteContactInfo(contactInfoID)
     }
 
