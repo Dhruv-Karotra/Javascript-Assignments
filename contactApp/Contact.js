@@ -1,4 +1,6 @@
-const ContactInfo=require("./ContactInfo")
+const ContactInfo=require("./ContactInfo");
+const NotFound = require("./error/NotFound");
+const ValidationError = require("./error/ValidationError");
 
 class Contact{
     static ID=0;
@@ -10,25 +12,28 @@ class Contact{
     }
 
     updateContact(parameter, updatedValue) {
-        switch (parameter) {
-            case "contactName":
-                if (typeof updatedValue !== 'string') {
-                    return "Invalid new contact name";
-                }
-                this.contactName = updatedValue;
-                return this;
-            case "country":
-                if (typeof updatedValue !== 'string') {
-                    return "Invalid new country name";
-                }
-                this.country = updatedValue;
-                return this;
-            default:
-                return "Invalid Parameter!";
+        try{
+            switch (parameter) {
+                case "contactName":
+                    if (typeof updatedValue !== 'string') {
+                        throw new ValidationError("Invalid new contact name");
+                    }
+                    this.contactName = updatedValue;
+                    return this;
+                case "country":
+                    if (typeof updatedValue !== 'string') {
+                        throw new ValidationError("Invalid new country name");
+                    }
+                    this.country = updatedValue;
+                    return this;
+                default:
+                    throw new ValidationError("Invalid Parameter!");
+            }
+        }
+        catch(e){
+            throw e;
         }
     }
-
-    
 
     createContactInfo(city,areaName){
         let contactInfoObj=new ContactInfo(city,areaName);
@@ -37,35 +42,52 @@ class Contact{
     }
 
     getContactInfo(){
-        return this.contactInfos
+        return this.contactInfos;
     }
 
     findContactInfo(contactID){
-        for(let index=0;index<this.contactInfos.length;index++){
-            if(this.contactInfos[index].ID==contactID){
-                return [index,true];
+        try{
+            for(let index=0;index<this.contactInfos.length;index++){
+                if(this.contactInfos[index].ID==contactID){
+                    return index;
+                }
             }
+            throw new NotFound("Contact Info not found");
         }
-        return [-1,false];
+        catch(e){
+            throw e;
+        }
     }
     
-    getContactInfoByID(contactID){
-        let [indexOfContactInfo, isContactInfo]=this.findContactInfo(contactID);
-        if(!isContactInfo){return "Contact info not found. Contact info does not exist";}
-        return this.contactInfos[indexOfContactInfo];
+    getContactInfoByID(contactInfoID){
+        try{
+            let indexOfContactInfo=this.findContactInfo(contactInfoID);
+            return this.contactInfos[indexOfContactInfo];
+        }
+        catch(e){
+            throw e;
+        }
     }
     
     updateContactInfo(contactInfoID,parameter,value){
-        let[indexOfContactInfo,isContactInfo]=this.findContactInfo(contactInfoID);
-        if(!isContactInfo){return "Contact info not found. Contact info does not exist";}
-        return this.contactInfos[indexOfContactInfo].updateContactInfo(parameter,value);
+        try{
+            let indexOfContactInfo=this.findContactInfo(contactInfoID);
+            return this.contactInfos[indexOfContactInfo].updateContactInfo(parameter,value);
+        }
+        catch(e){
+            throw e;
+        }
     }
 
     deleteContactInfo(contactInfoID){ 
-        let[indexOfContactInfo, isContactInfo]=this.findContactInfo(contactInfoID);
-        if(!isContactInfo){return "Contact info not found. Contact info does not exist";};
-        this.contactInfos.splice(indexOfContactInfo,1);
-        return Contact.contactInfos;
+        try{
+            let indexOfContactInfo=this.findContactInfo(contactInfoID);
+            this.contactInfos.splice(indexOfContactInfo,1);
+            return Contact.contactInfos;
+        }
+        catch(e){
+            throw e;
+        }
     }
 
   

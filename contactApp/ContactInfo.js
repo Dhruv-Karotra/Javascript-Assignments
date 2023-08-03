@@ -1,3 +1,5 @@
+const ValidationError = require("./error/ValidationError");
+
 class ContactInfo{
     static ID=0;
     constructor(city,areaName){
@@ -7,15 +9,26 @@ class ContactInfo{
     }
 
     updateContactInfo(parameter, newValue) {
-        switch (parameter) {
+        try{
+            switch (parameter) {
             case "city":
+                if (typeof newValue !== 'string') {
+                    throw new ValidationError("Invalid new city name");
+                }
                 this.city = newValue
                 return this;
             case "areaName":
+                if (typeof newValue !== 'string') {
+                    throw new ValidationError("Invalid new area name");
+                }
                 this.areaName = newValue
                 return this;
             default:
-                return "Invalid Parameter!"
+                throw new ValidationError("Invalid Parameter!");
+            }
+        }
+        catch(e){
+            throw e;
         }
     }
 
