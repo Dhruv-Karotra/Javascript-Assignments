@@ -56,16 +56,16 @@ class Contact{
     }
     
     updateContactInfo(contactInfoID,parameter,value){
-        let[indexOfContact,isContactInfo]=this.findContactInfo(contactInfoID)
+        let[indexOfContactInfo,isContactInfo]=this.findContactInfo(contactInfoID);
         if(!isContactInfo){return "Contact info not found. Contact info does not exist";}
-        return this.contactInfos[indexOfContact].updateContactInfo(parameter,value)
+        return this.contactInfos[indexOfContactInfo].updateContactInfo(parameter,value);
     }
 
-    deleteContactInfo(contactID){ 
-        let[indexOfContact, isContactInfo]=this.findContactInfo(contactID)
-        if(!isContactInfo){return "Contact info not found. Contact info does not exist";}
-        this.contactInfos.splice(indexOfContact,1)
-        return Contact.contactInfos
+    deleteContactInfo(contactInfoID){ 
+        let[indexOfContactInfo, isContactInfo]=this.findContactInfo(contactInfoID);
+        if(!isContactInfo){return "Contact info not found. Contact info does not exist";};
+        this.contactInfos.splice(indexOfContactInfo,1);
+        return Contact.contactInfos;
     }
 
   

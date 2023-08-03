@@ -241,16 +241,28 @@ class User{
         return this.contacts[indexOfContact].updateContactInfo(contactInfoID,parameter,newValue)
     }
 
-    deleteContactInfo(contactID){
+    // deleteContactInfo(contactID){
+    //     if(this.isAdmin){
+    //         return "Only user can delete contact!"
+    //     }
+    //     if(typeof contactID!='number'){
+    //         return "Invalid contactID passed!"
+    //     }
+    //     let[indexOfContact, isContact]=this.findContact(contactID)
+    //     if(!isContact){return "Contact not found. Contact does not exist";}
+    //     return this.contacts[indexOfContact].deleteContactInfo(contactID)
+    // }
+
+    deleteContactInfo(contactID,contactInfoID){
         if(this.isAdmin){
-            return "Only user can delete contact!"
+            return "Only user can delete contact!";
         }
         if(typeof contactID!='number'){
-            return "Invalid contactID passed!"
+            return "Invalid contactID passed!";
         }
         let[indexOfContact, isContact]=this.findContact(contactID)
-        if(!IsContact){return "Contact not found. Contact does not exist";}
-        return this.contacts[indexOfContact].deleteContactInfo(contactID)
+        // if(isContact){return "Contact not found. Contact does not exist";}
+        return this.contacts[indexOfContact].deleteContactInfo(contactInfoID)
     }
 
    
@@ -271,9 +283,18 @@ user1.updateContact(0,"country","Australia");
 
 user1.createContactInfo(0,"Navi Mumbai","Ulwe");
 user1.createContactInfo(1,"Navi Mumbai","Kharkopar");
+user1.createContactInfo(1,"Navi Mumbai","Bamandongri");
 user1.updateContactInfo(0,0,"city","Banglore");
 //console.log(user1);
-console.log(user1.contacts[0].getContactInfo());
+// console.log(user1);
+console.log(user1);
+//console.log(user1.deleteContactInfo(1,0));
+console.log(user1.contacts[1].getContactInfo());
+console.log(user1.deleteContactInfo(1,1));
+//console.log(user1.contacts[0].getContactInfo());
+console.log(user1.contacts[1].getContactInfo());
+
+
 
 // console.log(admin.getUserByID(1));
 // console.log(user1.getContactByID(1));
