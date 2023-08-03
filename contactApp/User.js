@@ -77,7 +77,7 @@ class User{
             throw new NotFound("User not found");
         }
         catch(e){
-            console.log(e);
+            throw e;
         }
     }
 
@@ -218,7 +218,7 @@ class User{
             return this.contacts[indexOfContact].updateContact(parameter,updatedValue);
         }
         catch(e){
-            throw e;
+            console.log(e);
         }
     }
 
